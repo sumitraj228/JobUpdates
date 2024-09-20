@@ -7,6 +7,8 @@ import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
 import Header from './components/Header'
 import Jobs from './pages/Jobs'
+import Footer from './components/Footer'
+import PrivateRoute from './components/PrivateRoute'
 
 export default function App() {
   return (
@@ -17,10 +19,15 @@ export default function App() {
       <Route path='/about' element={<About/>}/>
       <Route path='/sign-in' element={<Signin/>}/>
       <Route path='/sign-up' element={<Signup/>}/>
+      
+      <Route element={<PrivateRoute/>}>
       <Route path='/dashboard' element={<Dashboard/>}/>
+      </Route>
+
       <Route path='/jobs' element={<Jobs/>}/>
 
     </Routes>
+    <Footer/>
     </BrowserRouter>
   )
 }
