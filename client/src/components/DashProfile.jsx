@@ -1,5 +1,6 @@
 import { Alert, Button, Modal, TextInput } from 'flowbite-react'
 import React, { useEffect, useRef, useState } from 'react'
+import {Link} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import {app} from '../firebase'
@@ -12,7 +13,7 @@ import {HiOutlineExclamationCircle} from 'react-icons/hi'
 
 
 export default function DashProfile() {
-    const {currentUser, error} = useSelector(state=> state.user)
+    const {currentUser, error, loading} = useSelector(state=> state.user)
     const [imageFile, setImageFile]= useState(null);
     const [imageFileUrl, setImageFileUrl] =useState(null);
     const [imageFileUploadProgress, setImageFileUploadProgress]=useState(null);
@@ -199,7 +200,15 @@ export default function DashProfile() {
         <TextInput type='text' id='username' placeholder='username' defaultValue={currentUser.username} onChange={handleChange}/>
         <TextInput type='email' id='email' placeholder='email' defaultValue={currentUser.email} onChange={handleChange}/>
         <TextInput type='password' id='password' placeholder='password' onChange={handleChange}/>
-        <Button type='submit' gradientDuoTone='purpleToBlue' outline>Update</Button>
+        <Button type='submit' gradientDuoTone='purpleToBlue' outline disabled={loading || imageFileUploading}>
+          {loading ? 'Loading...' : 'Update'}
+        </Button>
+        {currentUser.isAdmin && (
+          
+          <Link to={'/create-post'}>
+          <Button type='button' gradientDuoTone={'purpleToPink'} className='w-full'>Create a post</Button>
+          </Link>
+        )}
       </form>
       <div className='text-red-500 flex justify-between mt-5'>
         <span onClick={()=>setShowModal(true)} className='cursor-pointer'>Delete Account</span>
