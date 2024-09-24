@@ -64,7 +64,7 @@ export const signin= async(req,res, next)=>{
 
             res.status(200).cookie('access_token', token, {
                 httpOnly:true,
-                expiresIn:10d,
+                 expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
             }).json(rest); 
         
 
@@ -90,7 +90,7 @@ export const google = async (req,res,next)=>{
             const {password, ...rest}= user._doc;
             res.status(200).cookie('access_token',token,{
                 httpOnly:true, 
-                expiresIn:10d,
+                expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 
             }).json(rest);
         }
         else{
@@ -109,7 +109,7 @@ export const google = async (req,res,next)=>{
             const {password, ...rest}= newUser._doc;
             res.status(200).cookie('access_token',token,{
                 httpOnly:true, 
-                expiresIn:10d,
+                 expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 
             }).json(rest);
         }
     } catch (error) {
